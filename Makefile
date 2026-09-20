@@ -1,5 +1,5 @@
 TOPLEVEL_LANG = verilog
-VERILOG_SOURCES = mux.sv
+VERILOG_SOURCES = mux.v
 TOPLEVEL=mux
 MODULE=test_bench
 

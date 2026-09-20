@@ -4,19 +4,19 @@ module mux #(
 	parameter INPUTS     =  2,
 	parameter REGISTERED =  0
 )(
-	input  logic 				clk,
-	input  logic 				rstn,
-	input  logic [$clog2(INPUTS)-1:0] 	sel,
-	input  logic [         WIDTH-1:0] 	data_in  [0:INPUTS-1],
-	output logic [         WIDTH-1:0] 	data_out
+	input  wire 				clk,
+	input  wire 				rstn,
+	input  wire [$clog2(INPUTS)-1:0] 	sel,
+	input  wire [(INPUTS*WIDTH)-1:0] 	data_in,
+	output wire [         WIDTH-1:0] 	data_out
 );
 	generate
 		if( !REGISTERED ) begin
-			assign data_out = data_in[sel];
+			assign data_out = data_in[WIDTH*(32'(sel)+1)-1 -: WIDTH];
 		end else begin
-			logic [WIDTH-1:0] r_data_out;
+			reg [WIDTH-1:0] r_data_out;
 			assign data_out = r_data_out;
-			always_ff @(posedge clk) begin
+			always @(posedge clk) begin
 				if( !rstn ) r_data_out <= {WIDTH{1'b0}};
 				else        r_data_out <= data_in[sel];
 			end
