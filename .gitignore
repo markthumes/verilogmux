@@ -2,3 +2,7 @@ __pycache__
 sim_build
 results.xml
 dump.vcd
+vivado*.jou
+vivado*.log
+*.swp
+vivado*.str
